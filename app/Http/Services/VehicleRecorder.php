@@ -149,7 +149,7 @@ class VehicleRecorder {
   			$vehicle->update();
   		}
   		$item['id'] = $vehicle->id;
-  		$hasJoin = VehiclesOwner::hasJoin();
+  		$hasJoin = VehiclesOwner::hasJoin($item['id'], $item['owner_id']);
   		if (!$hasJoin) {
   			$vo = new VehiclesOwner;
 	  		$vo->owner_id = $item['owner_id'];

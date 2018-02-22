@@ -25,4 +25,6 @@ Route::group([
 
     Route::get('/ingest', $controller.'@ingest');
 
+    Route::get('/ingest/save', $controller.'@ingestAndSave');
+
 });

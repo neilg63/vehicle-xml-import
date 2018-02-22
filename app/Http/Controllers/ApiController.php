@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Http\Services\VehicleXML;
+use App\Http\Services\VehicleRecorder;
 
 class ApiController extends Controller
 {
@@ -19,7 +20,23 @@ class ApiController extends Controller
 	}
 
 	public function ingest() {
+		$data = $this->readRaw();
+		return \Response::json($data);
+	}
 
+	public function ingestAndSave() {
+		$data = $this->readRaw();
+
+		$vehicles = $data['vehicles'];
+		$data['items'] = array();
+		foreach ($vehicles as $item) {
+			$data['items'][] = VehicleRecorder::saveFromFlatData($item);
+		}
+		
+		return \Response::json($data);
+	}
+
+	private function readRaw() {
 		$data = [
 			'valid' => false,
 			'message' => "Ingesting",
@@ -36,7 +53,8 @@ class ApiController extends Controller
 		
 		$data['valid'] = !empty($data['file']) && !empty($data['vehicles']);
 		$data['numVehicles'] = count($data['vehicles']);
-		return \Response::json($data);
+
+		return $data;
 	}
 
 }

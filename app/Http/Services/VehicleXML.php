@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-
 class VehicleXML {
 
 	protected $datasourcePath;

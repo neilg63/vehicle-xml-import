@@ -226,6 +226,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'VehicleXML' => App\Http\Services\VehicleXML::class,
+        'VehicleRecorder' => App\Http\Services\VehicleRecorder::class,
 
     ],
 

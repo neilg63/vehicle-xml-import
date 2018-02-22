@@ -18,4 +18,14 @@ class VehiclesOwner extends Model
     	return $this->belongsTo('App\Vehicle', 'vehicle_id');
     }
 
+    static public function hasJoin(int $vehicleId = 0, int $ownerId = 0) {
+    	$item = self::where('vehicle_id',$vehicleId)
+  					->where('owner_id',$ownerId)
+  					->first();
+  		if (is_object($item)) {
+  			return $item->id > 0;
+  		}
+  		return false;
+    }
+
 }

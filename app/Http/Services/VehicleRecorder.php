@@ -17,6 +17,7 @@ class VehicleRecorder {
 
     	if (isset($item['license_plate'])) {
     		$item['id'] = Vehicle::matchByReg($item['license_plate']);
+    		$item['reg'] = $item['license_plate'];
     		$item['new'] = $item['id'] < 1;
     		$isValid = true;
     	}
@@ -142,12 +143,19 @@ class VehicleRecorder {
   					break;
   			}
   		}
-  		$vehicle->save();
+  		if ($item['new']) {
+  			$vehicle->save();
+  		} else {
+  			$vehicle->update();
+  		}
   		$item['id'] = $vehicle->id;
-  		$vo = new VehiclesOwner;
-  		$vo->owner_id = $item['owner_id'];
-  		$vo->vehicle_id = $item['id'];
-  		$vo->save();
+  		$hasJoin = VehiclesOwner::hasJoin();
+  		if (!$hasJoin) {
+  			$vo = new VehiclesOwner;
+	  		$vo->owner_id = $item['owner_id'];
+	  		$vo->vehicle_id = $item['id'];
+	  		$vo->save();
+  		}
     }
 
 }

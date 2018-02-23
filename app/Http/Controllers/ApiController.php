@@ -18,7 +18,10 @@ class ApiController extends Controller
 
 		$data = ['valid' => true, 'message' => "Welcome to our Vehicle API"];
 		
-		$data['vehicles'] = Vehicle::allData();
+		$vehicles = Vehicle::allData();
+		$data['numVvehicles'] = count($vehicles);
+		$data['vehicles'] = $vehicles;
+		
 		return \Response::json($data);
 	}
 

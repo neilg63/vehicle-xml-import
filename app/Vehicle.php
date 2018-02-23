@@ -14,7 +14,7 @@ class Vehicle extends BaseModel
       'colour'
   ];
 
-   protected $casts = [
+  protected $casts = [
       'has_gps' => 'boolean',
       'has_boot' => 'boolean',
       'has_sunroof' => 'boolean',
@@ -31,6 +31,9 @@ class Vehicle extends BaseModel
   	return $this->belongsToMany('App\Owner', 'vehicles_owners','vehicle_id','owner_id');
   }
 
+  /*
+	* Return data set optimised for conversion to JSON
+  */
   static public function allData():array {
     $vehicles = self::all();
 		$items = array();
@@ -46,15 +49,19 @@ class Vehicle extends BaseModel
 					"weight_category"
 				])
 				->first();
-			$item['model'] = (object) $vmodel->toArray();
+			$record = $vmodel->toArray();
+			unset($record['maker_id']);
+			$item['model'] = (object) $record;
 			$maker = $vmodel->maker()->select(["id","name"])->first();
-			$item['maker'] = (object) $maker->toArray();
+			$item['model']->maker = (object) $maker->toArray();
 			$owners = $vehicle->owners()->get();
 			$item['owners'] = array();
 			foreach ($owners as $owner) {
 				$record = $owner->toArray();
 				$company = $owner->company()->select(["id","name"])->first();
 				$record['company'] = $company->toArray();
+				unset($record['pivot']);
+				unset($record['company_id']);
 				$item['owners'][] = (object) $record;
 			}
 			

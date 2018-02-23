@@ -69,7 +69,7 @@ class VehicleRecorder {
     				$model->maker_id = $item['maker_id'];
     				$model->name = $item['model'];
     				if (isset($item['is_hgv'])) {
-    					$model->is_hgv = (int) $item['is_hgv'];
+    					$model->is_hgv = (bool) $item['is_hgv'];
     				}
     				if (isset($item['no_wheels'])) {
     					$model->no_wheels = (int) $item['no_wheels'];
@@ -120,6 +120,8 @@ class VehicleRecorder {
   				case 'vmodel_id':
   				case 'no_doors':
   				case 'no_seats':
+  					$vehicle->{$key} = (bool) $value;
+  					break;
   				case 'has_gps':
   				case 'engine_cc':
   				case 'has_trailer':
@@ -147,6 +149,7 @@ class VehicleRecorder {
   			$vehicle->save();
   		} else {
   			$vehicle->update();
+
   		}
   		$item['id'] = $vehicle->id;
   		$hasJoin = VehiclesOwner::hasJoin($item['id'], $item['owner_id']);

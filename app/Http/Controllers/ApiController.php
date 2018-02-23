@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Http\Services\VehicleXML;
 use App\Http\Services\VehicleRecorder;
+use App\Vehicle;
 
 class ApiController extends Controller
 {
@@ -16,6 +17,8 @@ class ApiController extends Controller
 	public function index() {
 
 		$data = ['valid' => true, 'message' => "Welcome to our Vehicle API"];
+		
+		$data['vehicles'] = Vehicle::allData();
 		return \Response::json($data);
 	}
 
@@ -32,7 +35,7 @@ class ApiController extends Controller
 		foreach ($vehicles as $item) {
 			$data['items'][] = VehicleRecorder::saveFromFlatData($item);
 		}
-		
+
 		return \Response::json($data);
 	}
 

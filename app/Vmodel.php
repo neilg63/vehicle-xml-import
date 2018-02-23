@@ -19,8 +19,12 @@ class Vmodel extends BaseModel
 		'no_wheels'
 	];
 
+	protected $casts = [
+      'is_hgv' => 'boolean'
+  ];
+
   public function maker() {
-  	return $this->belongsTo('App\Maker', 'maker_id');
+  	return $this->belongsTo('App\Maker');
   }
 
   static public function matchIdByNameAndMake(string $name = "", $makerId = 0):int {

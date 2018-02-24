@@ -47,6 +47,8 @@
                         <dd>{{vehicle.engine_cc}}</dd>
                         <dt>Transmission</dt>
                         <dd>{{vehicle.transmission}}</dd>
+                        <dt>Fuel type</dt>
+                        <dd>{{vehicle.fuel_type}}</dd>
                         <dt>No. of doors</dt>
                         <dd>{{vehicle.no_doors}}</dd>
                         <dt>Colour</dt>

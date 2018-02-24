@@ -12,9 +12,9 @@ The static VehicleRecord class handles the import of custom XML into a more rela
 
 In the real world we'd probably have Manufacturers, Models and versions, as the same model may have many variations e.g. 3/5 doors, fuel type, engine cc etc. Such data does not necessarily pertain to the individual vehicle, but we have to allow for modifications (e.g. a new engine with a different capacity). In my simplified schema most attributes are assigned to the vehicle and only core attributes such as is_hgv or weight_category are assigned to the model. Manufacturer or maker data is referenced via the model, though I suspect some model were assigned to the wrong manufacturer in the source XML.
 
-In practice a vehicle may have had many owners. I thus associated owners with vehicles via the vehicles_owners table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
+In practice a vehicle may have had many owners. I thus associated owners with vehicles via the *vehicles_owners* table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
 
-I tried to keep to *Eloquent* conventions as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflict though I could have added as alias for the parent Model class). Most of the custom is involved either in matching models, makers, owners and vehicle by unique identifier and to prepare the data structure for the API controller listing. Hence there is a fair chunk of code in the core Vehicle model that may be abstracted to a Service component.
+I tried to stick to *Eloquent* conventions as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflicts). Most of the custom code is involved either in matching models, makers, owners and vehicle by unique identifier and in preparing the data structure for the API controller listing. Hence there is a fair chunk of code in the core Vehicle model that may be abstracted to a Service component.
 
 ## Routes
 
@@ -25,7 +25,7 @@ I tried to keep to *Eloquent* conventions as far as possible. Had to rename the 
 
 ## VueJS Frontend
 
-In my last couple of Vue projects I've Webpack with nested components, each having its own subtemplate. However, I wanted to quickly integrate it into this project as a proof of concept only. I this loaded VueJS 2.0 and Axios from a CDN and combined logic which naturally belongs to components in the main Vue controller. I built two separate lists of makers with related models and of vehicles. The sidebar menu lets you filter by manufacturer or model. 
+In my last couple of Vue projects I've used Webpack with nested components, each having its own subtemplate. However, I wanted to quickly integrate it into this project as a proof of concept only. I this loaded VueJS 2.0 and Axios from a CDN and combined logic which naturally belongs to components in the main Vue controller. I built two separate lists of makers with related models and of vehicles. The sidebar menu lets you filter by manufacturer or model. 
 
 ## Installation Notes
 

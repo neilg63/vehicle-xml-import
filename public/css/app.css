@@ -24,6 +24,12 @@ body {
 	}	
 }
 
+#app h1 {
+	font-size: 3em;
+	text-align: center;
+	transform: scaleX(1.5);
+}
+
 
 #app article,
 #app dl {
@@ -61,13 +67,43 @@ article h3 .maker-name {
 	cursor: pointer;
 }
 
-.sidebar .selected {
+.sidebar .actionable:hover {
+	filter: hue-rotate(120deg);
+}
+
+.sidebar .simple-list li.selected,
+.sidebar li li.selected,
+.sidebar strong.selected {
 	font-style: italic;
+	text-decoration: underline;
+}
+
+.sidebar h5 {
+	margin: 0.75em 0 0.25em 0;
+	padding: 0;
 }
 
 .sidebar .makers-list > li > ul > li,
 article h3 .model-name {
 	color: #ffcc66;
+}
+
+.sidebar .makers-list > li > ul > li {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.25s ease-in-out;
+}
+
+.sidebar .makers-list > li.selected > ul > li {
+	max-height: 2em;
+}
+
+.fuel-types li {
+	color: #ff3366;
+}
+
+.transmission-types li {
+	color: #33ff33;
 }
 
 #app article.hide {

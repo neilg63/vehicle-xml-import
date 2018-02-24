@@ -15,6 +15,9 @@ class CreateOwnersTable extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('company_id');
+            $table->string('name')->unique();
+            $table->string('profession');
             $table->timestamps();
         });
     }

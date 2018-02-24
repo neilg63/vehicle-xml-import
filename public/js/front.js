@@ -5,8 +5,12 @@ var app = new Vue({
   	vehicles: [],
   	numVehicles: 0,
   	makerModels: [],
+  	transmissionTypes: [],
+  	fuelTypes: [],
   	selectedModel: 0,
-  	selectedMake: 0
+  	selectedMake: 0,
+  	selectedFuelType: "",
+  	selectedTransmission: ""
   },
   created: function() {
   	var comp = this;
@@ -46,19 +50,17 @@ var app = new Vue({
 				model,
 				maker,
 				makerIndex,
-				modelIndex;
+				modelIndex,
+				tempIndex;
 			for (; i < data.numVehicles; i++) {
 				vehicle = data.vehicles[i];
+				vehicle.showClass = 'show';
+
 				model = vehicle.model;
 				maker = vehicle.model.maker;
 				makerIndex = this.makerModels.findIndex(function(m) {
 					return m.id == maker.id;
 				});
-				vehicle.filterClasses = [
-					'model-' + model.id,
-					'maker-' + maker.id
-				];
-				vehicle.showClass = 'show';
 				if (makerIndex < 0) {
 					maker.models = [model];
 					this.makerModels.push(maker);
@@ -69,6 +71,14 @@ var app = new Vue({
 					if (modelIndex < 0) {
 						this.makerModels[makerIndex].models.push(model);
 					}
+				}
+				tempIndex = this.transmissionTypes.indexOf(vehicle.transmission);
+				if (tempIndex < 0) {
+					this.transmissionTypes.push(vehicle.transmission);
+				}
+				tempIndex = this.fuelTypes.indexOf(vehicle.fuel_type);
+				if (tempIndex < 0) {
+					this.fuelTypes.push(vehicle.fuel_type);
 				}
 			}
 			this.makerModels = this.makerModels.sort(function(a,b) {
@@ -82,9 +92,24 @@ var app = new Vue({
 			this.filterBy(makerId, 'maker');
 		},
 		filterByModel: function(modelId) {
-			this.selectedMake = 0;
+			var index = this.makerModels.findIndex(function(mk) {
+				return mk.models.findIndex(function(md) {
+					return md.id == modelId;
+				}) >= 0;
+			});
+			if (index >= 0) {
+				this.selectedMake = this.makerModels[index].id;
+			}
 			this.selectedModel = modelId;
 			this.filterBy(modelId, 'model');
+		},
+		filterByFuelType: function(fuelType) {
+			this.selectedFuelType = fuelType;
+			this.filterBy(fuelType, 'fuelType');
+		},
+		filterByTransmission: function(transmission) {
+			this.selectedTransmission = transmission;
+			this.filterBy(transmission, 'transmission');
 		},
 		filterBy: function(ref,field) {
 			var i = 0, show = false, vehicle;
@@ -96,6 +121,12 @@ var app = new Vue({
 						break;
 					case 'model':
 						show = vehicle.model.id === ref;
+						break;
+					case 'fuelType':
+						show = vehicle.fuel_type == ref;
+						break;
+					case 'transmission':
+						show = vehicle.transmission == ref;
 						break;
 					default:
 						show = true;

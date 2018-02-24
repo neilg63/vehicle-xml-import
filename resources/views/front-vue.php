@@ -16,8 +16,17 @@
             <h1>{{title}}</h1>
             <aside class="sidebar">
                 <h3 v-on:click="resetFilter()" class="reset actionable">Show all</h3>
+                <h5>Fuel Type</h5>
+                <ul v-if="fuelTypes.length > 0" class="pure-menu-list fuel-types simple-list">
+                    <li v-for="fuelType in fuelTypes" class="pure-menu-item actionable" :class="{'selected': fuelType == selectedFuelType}" v-on:click.stop="filterByFuelType(fuelType)">{{fuelType}}</li>
+                </ul>
+                <h5>Transmission</h5>
+                <ul v-if="transmissionTypes.length > 0" class="pure-menu-list transmission-types simple-list">
+                    <li v-for="transmission in transmissionTypes" class="pure-menu-item actionable" :class="{'selected': transmission == selectedTransmission}" v-on:click.stop="filterByTransmission(transmission)">{{transmission}}</li>
+                </ul>
+                <h5>Make and model</h5>
                 <ul v-if="numMakers > 0" class="pure-menu-list makers-list">
-                    <li v-for="maker in makerModels" class="pure-menu-item">
+                    <li v-for="maker in makerModels" class="pure-menu-item" :class="{'selected': maker.id == selectedMake}">
                         <strong class="maker-name actionable" :class="{'selected': maker.id == selectedMake}" v-on:click.stop="filterByMaker(maker.id)">{{maker.name}}</strong>
                         <ul v-if="maker.models.length>0" class="pure-menu-list">
                             <li v-for="model in maker.models" class="pure-menu-item actionable" :class="{'selected': model.id == selectedModel}" v-on:click.prevent="filterByModel(model.id)">{{model.name}}</li>
@@ -36,6 +45,8 @@
                         <dd>{{vehicle.reg}}</dd>
                         <dt>Engine CC</dt>
                         <dd>{{vehicle.engine_cc}}</dd>
+                        <dt>Transmission</dt>
+                        <dd>{{vehicle.transmission}}</dd>
                         <dt>No. of doors</dt>
                         <dd>{{vehicle.no_doors}}</dd>
                         <dt>Colour</dt>

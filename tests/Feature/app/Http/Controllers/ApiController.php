@@ -5,9 +5,25 @@ namespace Tests\Feature\app\Http\Controllers;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends TestCase
 {
+
+  static private $emptiedTables = false;
+
+  public function setUp() {
+    parent::setUp();
+    // To avoid error with Facades
+    // use static class member
+    // to check this is only run once
+    if (!self::$emptiedTables) {
+      $this->emptyTables();
+      self::$emptiedTables = true;
+    }
+    
+  }
+
   /**
    * Test the API COntroller workers with
    * the VehicleXML service
@@ -129,6 +145,19 @@ class ApiController extends TestCase
   	$response = $this->call('GET', $path);
       $rawJSON = $response->content();
     return @json_decode($rawJSON);
+  }
+
+  private function emptyTables() {
+    $tables = [
+      'vehicles_owners',
+      'vehicles',
+      'owners',
+      'vmodels',
+      'makers'
+    ];
+    foreach ($tables as $table) {
+      DB::table($table)->truncate();
+    }
   }
 
 }

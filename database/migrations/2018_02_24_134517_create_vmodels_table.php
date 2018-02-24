@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelsTable extends Migration
+class CreateVmodelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('maker_id');
+            $table->string('name');
+            $table->tinyInteger('is_hgv',1);
+            $table->tinyInteger('no_wheels', 2);
+            $table->tinyInteger('weight_category', 2);
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('models');
+        Schema::dropIfExists('vmodels');
     }
 }

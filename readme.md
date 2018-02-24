@@ -14,7 +14,7 @@ In the real world we'd probably have Manufacturers, Models and versions, as the 
 
 In practice a vehicle may have had many owners. I thus associated owners with vehicles via the vehicles_owners table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
 
-I tried to keep to *Eloquent* convention as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflict). Most of the custom is involved either in matching models, makers, owners and vehicle by unique identifier.
+I tried to keep to *Eloquent* conventions as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflict though I could have added as alias for the parent Model class). Most of the custom is involved either in matching models, makers, owners and vehicle by unique identifier and to prepare the data structure for the API controller listing. Hence there is a fair chunk of code in the core Vehicle model that may be abstracted to a Service component.
 
 ## Routes
 

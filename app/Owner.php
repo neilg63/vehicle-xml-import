@@ -18,6 +18,13 @@ class Owner extends BaseModel
   	return $this->belongsToMany('App\Vehicles', 'vehicles_owners','owner_id','vehicle_id');
   }
 
+  static public function matchByName(string $name = "") {
+		$id = self::matchIdByName($name);
+		if ($id > 0) {
+			return self::find($id);
+		}
+	}
+
   static public function matchIdByName(string $name = ""):int {
 		return self::matchIdByNameAndTable($name,"owners");
 	}

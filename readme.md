@@ -12,9 +12,9 @@ The static VehicleRecord class handles the import of custom XML into a more rela
 
 In the real world we'd probably have Manufacturers, Models and versions, as the same model may have many variations e.g. 3/5 doors, fuel type, engine cc etc. Such data does not necessarily pertain to the individual vehicle, but we have to allow for modifications (e.g. a new engine with a different capacity). In my simplified schema most attributes are assigned to the vehicle and only core attributes such as is_hgv or weight_category are assigned to the model. Manufacturer or maker data is referenced via the model, though I suspect some model were assigned to the wrong manufacturer in the source XML.
 
-In the real world a vehicle may have had many owners. I thus associated owners with vehicles via the vehicles_owners table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
+In practice a vehicle may have had many owners. I thus associated owners with vehicles via the vehicles_owners table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
 
-I tried to keep to Eloquent convention as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflict). Most of the custom is involved either in matching models, makers, owners and vehicle by unique identifier.
+I tried to keep to *Eloquent* convention as far as possible. Had to rename the Model class to Vmodel (for obvious reasons due to name conflict). Most of the custom is involved either in matching models, makers, owners and vehicle by unique identifier.
 
 ## Routes
 

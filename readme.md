@@ -26,3 +26,16 @@ I tried to keep to *Eloquent* conventions as far as possible. Had to rename the 
 ## VueJS Frontend
 
 In my last couple of Vue projects I've Webpack with nested components, each having its own subtemplate. However, I wanted to quickly integrate it into this project as a proof of concept only. I this loaded VueJS 2.0 and Axios from a CDN and combined logic which naturally belongs to components in the main Vue controller. I built two separate lists of makers with related models and of vehicles. The sidebar menu lets you filter by manufacturer or model. 
+
+## Installation Notes
+
+I built the project using Composer + artisan commands. I expect there is a good deal of default stuff there. Other than PHP 7.1, the only other dependencies are SimpleXML and MySQL.
+As always I created the database schema first. I used Laravels *artisan migrate* scripts and then updated them with all fields. Just in case I added database schema export file to the *datasource* directory.
+
+# Feature Test Notes
+
+To run: 
+```
+phpunit tests/Feature/app/Http/Controllers/ApiController.php
+```
+This test empties all DB tables and recreates the database from scratch. In a commercial project I'd naturally set up a test environment with a separate database.

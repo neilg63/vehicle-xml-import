@@ -10,7 +10,7 @@ The static VehicleRecord class handles the import of custom XML into a more rela
 
 ## Data Schema Notes
 
-In the real world we'd probably have Manufacturers, Models and versions, as the same model may have many variations e.g. 3/5 doors, fuel type, engine cc etc. Such data does not necessarily pertain to the individual vehicle, but we have to allow for modifications (e.g. a new engine with a different capacity). In my simplified schema most attributes are assigned to the vehicle and only core attributes such as is_hgv or weight_category are assigned to the model. Manufacturer or maker data is referenced via the model, though I suspect some model were assigned to the wrong manufacturer in the source XML.
+In the real world we'd probably have Manufacturers, Models and versions, as the same model may have many variations e.g. 3/5 doors, fuel type, engine cc etc. Such data does not necessarily pertain to the individual vehicle, but we have to allow for modifications (e.g. a new engine with a different capacity). In my simplified schema most attributes are assigned to the vehicle and only core attributes such as is_hgv or weight_category are assigned to the model. Manufacturer or maker data is referenced via the model, though I suspect some models were assigned to the wrong manufacturer in the source XML.
 
 In practice a vehicle may have had many owners. I thus associated owners with vehicles via the *vehicles_owners* table. Note the owners table does not have separate first and last name fields as that wouuld involve string parsing and more testing as well as a title field (e.g. Dr) and not within the scope of this exercise. The source file only had flattened data with the current owner. This may be one abtsraction too far, but in real world systems we have to allow some flexibility.
 
@@ -19,13 +19,13 @@ I tried to stick to *Eloquent* conventions as far as possible. Had to rename the
 ## Routes
 
 * / => Rudimentary frontend listing
-* /api => JSON listing of all vehicles (yes I know in the world this would be paginated with filter options)
+* /api => JSON listing of all vehicles (yes I know in the real world this would be paginated with filter options)
 * /api/ingest => Read the Source XML and output data as a flattened JSON dataset
 * /api/ingest/save => Import the XML to our relational database and output results as JSON (same as above, but with a new items array)
 
 ## VueJS Frontend
 
-In my last couple of Vue projects I've used Webpack with nested components, each having its own subtemplate. However, I wanted to quickly integrate it into this project as a proof of concept only. I this loaded VueJS 2.0 and Axios from a CDN and combined logic which naturally belongs to components in the main Vue controller. I built two separate lists of makers with related models and of vehicles. The sidebar menu lets you filter by manufacturer or model. 
+In my last couple of Vue projects I've used Webpack with nested components, each having its own subtemplate. However, I wanted to quickly integrate it into this project as a proof of concept only. I thus loaded VueJS 2.0 and Axios from a CDN and combined logic which naturally belongs to separate components in the main Vue controller. The source data is then converted into lists of all vehicles, of makers with related models, fuel types and transmission types. The sidebar menu lets you filter by manufacturer, model, fuel type or transmission. 
 
 ## Installation Notes
 
@@ -38,4 +38,4 @@ To run:
 ```
 phpunit tests/Feature/app/Http/Controllers/ApiController.php
 ```
-This test empties all DB tables and recreates the database from scratch. In a commercial project I'd naturally set up a test environment with a separate database.
+This feature test empties all DB tables and recreates the database from scratch. In a commercial project I'd naturally set up a test environment with a separate database.

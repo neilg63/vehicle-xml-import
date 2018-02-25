@@ -153,7 +153,8 @@ class ApiController extends TestCase
       'vehicles',
       'owners',
       'vmodels',
-      'makers'
+      'makers',
+      'companies'
     ];
     foreach ($tables as $table) {
       DB::table($table)->truncate();

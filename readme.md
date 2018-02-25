@@ -1,6 +1,6 @@
 # Simple Vehicle Import API
 
-This is a simple proof of concept application written in Laravel. It ingests custom XML with vehical data and provides a JSON API to expose the data to frontend frameworks such as Vue, Angular or React.
+This is a simple proof of concept application written in Laravel. It ingests custom XML with vehicle data and provides a JSON API to expose the data to frontend frameworks such as Vue, Angular or React.
 
 ## XML Import
 I created Service class to read the source XML from a custom directory datasources outside the Web root. In theory it looks for all XML files in this directory, but I created a separate routine that matches the first. The VehicleXML parsers then flattens the XML into a simpler representations converting attributes in the parent Vehicle element to properties of the main object.
